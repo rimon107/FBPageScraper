@@ -9,6 +9,9 @@ from text_cleaner import keep
 from text_cleaner.processor.common import ASCII
 from text_cleaner.processor.misc import URL
 import re
+from urllib.parse import quote
+import requests
+YANDEX_API_KEY = 'trnsl.1.1.20170405T100507Z.68eb04467c77c335.900c5e0f0706285f87284dcc800a1154754e4e66'
 
 try:
     from urllib.request import urlopen, Request
@@ -17,7 +20,10 @@ except ImportError:
 
 app_id = "455829857840460"
 app_secret = "82d68ee28f0df32397920195f41bbae7"  # DO NOT SHARE WITH ANYONE!
-page_id = "Shwapno.ACILL"
+#page_id = "Agora.Rahimafrooz"
+#page_id = "Shwapno.ACILL"
+page_id = "meenabazar.bd"
+
 
 # input date formatted as YYYY-MM-DD
 since_date = ""
@@ -133,7 +139,7 @@ def processFacebookPageFeedStatus(status):
 
 
 def scrapeFacebookPageFeedStatus(page_id, access_token, since_date, until_date):
-    with open('{}_facebook_statuses.csv'.format(page_id), 'w', encoding="utf-8", newline='') as file:
+    with open('{}_facebook_statuses.csv'.format(page_id), 'w', encoding="utf-8-sig", newline='') as file:
         w = csv.writer(file)
         w.writerow(["status_id", "status_message", "link_name", "status_type",
                     "status_link", "status_published", "num_reactions",

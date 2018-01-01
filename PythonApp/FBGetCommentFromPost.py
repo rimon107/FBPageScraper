@@ -9,15 +9,22 @@ from text_cleaner import keep
 from text_cleaner.processor.common import ASCII
 from text_cleaner.processor.misc import URL
 import re
+from urllib.parse import quote
+import requests
 
 try:
     from urllib.request import urlopen, Request
 except ImportError:
     from urllib2 import urlopen, Request
 
+
+YANDEX_API_KEY = 'trnsl.1.1.20170405T100507Z.68eb04467c77c335.900c5e0f0706285f87284dcc800a1154754e4e66'
+
 app_id = "455829857840460"
 app_secret = "82d68ee28f0df32397920195f41bbae7"  # DO NOT SHARE WITH ANYONE!
-file_id = "Shwapno.ACILL"
+#file_id = "Agora.Rahimafrooz"
+#file_id = "Shwapno.ACILL"
+file_id = "meenabazar.bd"
 
 access_token = app_id + "|" + app_secret
 
@@ -129,7 +136,7 @@ def processFacebookComment(comment, status_id, parent_id=''):
 
 
 def scrapeFacebookPageFeedComments(page_id, access_token):
-    with open('{}_facebook_comments.csv'.format(file_id), 'w', encoding="utf-8", newline='') as file:
+    with open('{}_facebook_comments.csv'.format(file_id), 'w', encoding="utf-8-sig", newline='') as file:
         w = csv.writer(file)
         w.writerow(["comment_id", "status_id", "parent_id", "comment_message",
                     "comment_author", "comment_published", "num_reactions",
@@ -147,7 +154,7 @@ def scrapeFacebookPageFeedComments(page_id, access_token):
         print("Scraping {} Comments From Posts: {}\n".format(
             file_id, scrape_starttime))
 
-        with open('{}_facebook_statuses.csv'.format(file_id), 'r', encoding="utf-8") as csvfile:
+        with open('{}_facebook_statuses.csv'.format(file_id), 'r', encoding="utf-8-sig") as csvfile:
             reader = csv.DictReader(csvfile)
 
             # Uncomment below line to scrape comments for a specific status_id
